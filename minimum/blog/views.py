@@ -24,8 +24,16 @@ class PostDetail(DetailView):
 class CreatePost(CreateView):
     template_name = 'blog/create_post.html'
     model = Blog
-    fields = ['title', 'body', 'categories', 'author', 'status']
+    fields = ['title', 'body', 'categories', 'status']
     success_url = reverse_lazy('home')
+
+    def form_valid(self, form):
+        if self.request.user.is_authenticated:
+            form.instance.author = self.request.user
+            self.object = form.save()
+            return super(CreatePost, self).form_valid(form)
+        else:
+            raise Http404()
 
 
 class CategoryView(ListView):
