@@ -1,0 +1,11 @@
+{% extends 'layout.html' %}
+{% block content %}
+    {% for post in object_list %}
+    <div>
+        <a href="{% url 'post_detail' post.author.username post.id %}"><h2>{{ post.title }}</h2></a>
+        <p>Written by: {{ post.author }}</p>
+        {% if post.date_published %}<p>{{ post.date_published }}</p>{% endif %}
+        {% for category in post.categories.all %}<p>{{ category.name }}</p>{% endfor %}
+    </div>
+    {% endfor %}
+{% endblock %}

@@ -18,11 +18,22 @@ from django.conf.urls import url
 from django.conf.urls.static import static
 from django.contrib import admin
 from minimum.views import HomeView
+from blog.views import PostDetail, CategoryView
 
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', HomeView.as_view(), name='home'),
+    url(
+        r'^\@(?P<username>[\w\_\-]+)/(?P<pk>\d+)$',
+        PostDetail.as_view(),
+        name='post_detail'
+    ),
+    url(
+        r'^(?P<category>[a-zA-Z]+)$',
+        CategoryView.as_view(),
+        name='category'
+    )
 ]
 
 if settings.DEBUG:

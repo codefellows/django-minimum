@@ -23,13 +23,13 @@ class Blog(models.Model):
     date_modified = models.DateTimeField(auto_now=True)
     date_published = models.DateTimeField(blank=True, null=True)
     author = models.ForeignKey(User, related_name='posts')
-    category = models.ManyToManyField(Category)
+    categories = models.ManyToManyField(Category)
     STATUSES = [
         ('draft', 'Draft'),
         ('published', 'Published'),
         ('private', 'Private')
     ]
-    status = models.CharField(choices=STATUSES, max_length=10)
+    status = models.CharField(choices=STATUSES, max_length=10, default="draft")
 
     def __repr__(self):
         return f"<Blog Post { self.title }>"
