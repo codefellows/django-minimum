@@ -18,7 +18,7 @@ from django.conf.urls import url
 from django.conf.urls.static import static
 from django.contrib import admin
 from minimum.views import HomeView
-from blog.views import PostDetail, CategoryView
+from blog.views import PostDetail, CategoryView, CreatePost
 
 
 urlpatterns = [
@@ -33,6 +33,11 @@ urlpatterns = [
         r'^(?P<category>[a-zA-Z]+)$',
         CategoryView.as_view(),
         name='category'
+    ),
+    url(
+        r'^post-create$',
+        CreatePost.as_view(),
+        name='create_post'
     )
 ]
 

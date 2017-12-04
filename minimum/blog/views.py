@@ -1,8 +1,9 @@
 from django.shortcuts import get_object_or_404
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, ListView, CreateView
 from blog.models import Blog, Category
 from django.http import Http404
 from django.utils.translation import ugettext as _
+from django.urls import reverse_lazy
 
 
 class PostDetail(DetailView):
@@ -18,6 +19,13 @@ class PostDetail(DetailView):
         else:
             raise Http404(_("No %(verbose_name)s found matching the query") %
                           {'verbose_name': queryset.model._meta.verbose_name})
+
+
+class CreatePost(CreateView):
+    template_name = 'blog/create_post.html'
+    model = Blog
+    fields = ['title', 'body', 'categories', 'author', 'status']
+    success_url = reverse_lazy('home')
 
 
 class CategoryView(ListView):
