@@ -18,7 +18,7 @@ from django.conf.urls import url
 from django.conf.urls.static import static
 from django.contrib import admin
 from minimum.views import HomeView
-from blog.views import PostDetail, CategoryView, CreatePost
+from blog.views import PostDetail, CategoryView, CreatePost, EditPost
 
 
 urlpatterns = [
@@ -28,6 +28,11 @@ urlpatterns = [
         r'^\@(?P<username>[\w\_\-]+)/(?P<pk>\d+)$',
         PostDetail.as_view(),
         name='post_detail'
+    ),
+    url(
+        r'^\@(?P<username>[\w\_\-]+)/(?P<pk>\d+)/edit$',
+        EditPost.as_view(),
+        name='post_edit'
     ),
     url(
         r'^(?P<category>[a-zA-Z]+)$',

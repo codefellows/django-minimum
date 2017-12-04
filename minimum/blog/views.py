@@ -1,9 +1,10 @@
 from django.shortcuts import get_object_or_404
-from django.views.generic import DetailView, ListView, CreateView
+from django.views.generic import DetailView, ListView, CreateView, UpdateView
 from blog.models import Blog, Category
 from django.http import Http404
 from django.utils.translation import ugettext as _
 from django.urls import reverse_lazy
+from django.utils.encoding import force_text
 
 
 class PostDetail(DetailView):
@@ -34,6 +35,19 @@ class CreatePost(CreateView):
             return super(CreatePost, self).form_valid(form)
         else:
             raise Http404()
+
+
+class EditPost(UpdateView):
+    model = Blog
+    template_name = 'blog/create_post.html'
+    fields = ['title', 'body', 'categories', 'status']
+
+    def get_success_url(self):
+        """
+        Returns the supplied success URL.
+        """
+        url = force_text(reverse_lazy('post_detail', kwargs=self.kwargs))
+        return url
 
 
 class CategoryView(ListView):
